@@ -1,0 +1,6 @@
+npm init -y
+
+npm install express --save
+
+npm i -D nodemon livereload connect-livereload
+
