@@ -51,7 +51,7 @@ app.post("/todos", async (req, res) => {
     };
 
     todos.push(todo);
-    res.status(201);
+    res.status(201).json({status: 'OK'});
 });
 
 

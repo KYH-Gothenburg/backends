@@ -2,7 +2,7 @@ getTodos();
 
 window.setInterval(() => {
   getTodos();
-}, 100000000);
+}, 1000);
 
 function getTodos() {
   fetch("http://localhost:5000/todos")
@@ -51,7 +51,17 @@ list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
     ev.target.classList.toggle('checked');
 
-
+    const checked = ev.target.classList.contains("checked");
+    console.log(checked);
+    const todoId = ev.target.querySelector(".id").value;
+    fetch(`http://localhost:5000/todos/${todoId}`, {
+      method: "PATCH",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({completed: checked})
+    });
   }
 }, false);
 
@@ -94,6 +104,14 @@ function newElement(todoText = '', completed=false, id=-1) {
 
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
+      const todoId = this.parentElement.querySelector(".id").value;
+      fetch(`http://localhost:5000/todos/${todoId}`, {
+        method: "DELETE",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }
+      });
       var div = this.parentElement;
       div.style.display = "none";
     }
